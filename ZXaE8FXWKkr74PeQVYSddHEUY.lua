@@ -34,7 +34,7 @@ local Themes = {
 		"VolcanoHubXViolet",
 		"VolcanoHubX"
 	},
-	VolcanoHubX = {
+	VolcanoHubXViolet = {
 		Name = "VolcanoHubXViolet",
 		Accent = Color3.fromRGB(148, 0, 211),  
 		AcrylicMain = Color3.fromRGB(20, 20, 30),
@@ -84,7 +84,7 @@ local Themes = {
 	-- ║        VOLCANOHUB RED THEME          ║
 	-- ║   Deep Crimson • Lava • Dark Ash     ║
 	-- ╚══════════════════════════════════════╝
-	VolcanoHubRed = {
+	VolcanoHubX = {
 		Name = "VolcanoHubX",
 
 		-- Core accent: vivid crimson/lava red
