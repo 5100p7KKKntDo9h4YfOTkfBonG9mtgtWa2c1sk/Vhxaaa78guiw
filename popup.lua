@@ -4,7 +4,7 @@ local TweenService = game:GetService("TweenService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
-local DISCORD_ICON_ASSET_ID = "rbxassetid://91266003266869"
+local DISCORD_ICON_ASSET_ID = ""
 local discordLink = "https://discord.gg/uAMwhmzAcA"
 
 local screenGui = Instance.new("ScreenGui")
@@ -42,7 +42,7 @@ title.Name = "Title"
 title.Size = UDim2.new(1, 0, 0.3, 0)
 title.Position = UDim2.new(0, 0, 0, 0)
 title.BackgroundTransparency = 1
-title.Text = "Luna Hub Script"
+title.Text = "Volcano Hub X"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.GothamBlack
 title.TextSize = 28
