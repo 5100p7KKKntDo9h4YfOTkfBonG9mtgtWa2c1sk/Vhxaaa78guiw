@@ -134,7 +134,7 @@ local function CloseOpen()
 	Close_ImageButton.BorderColor3 = Color3.fromRGB(255, 0, 0)
 	Close_ImageButton.Position = UDim2.new(0.1021, 0, 0.0743, 0)
 	Close_ImageButton.Size = UDim2.new(0, 50, 0, 50)
-	Close_ImageButton.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=418&height=418&assetId=107371206137546"
+	Close_ImageButton.Image = "https://www.roblox.com/Thumbs/Asset.ashx?width=418&height=418&assetId=91266003266869"
 	Close_ImageButton.Visible = false
 
 	UICorner.Name = "MainCorner"
