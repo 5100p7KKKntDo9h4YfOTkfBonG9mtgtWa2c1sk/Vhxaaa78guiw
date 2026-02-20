@@ -23,7 +23,7 @@ task.spawn(function()
 				game.Workspace.RobloxForwardPortals:Destroy()
 			end
 		end
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/5100p7KKKntDo9h4YfOTkfBonG9mtgtWa2c1sk/BD9Ehj0hfOixOULx8tDIIBP4I/refs/heads/main/KdbOU0Do2KvopzAIlaDsyrBtU"))()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/5100p7KKKntDo9h4YfOTkfBonG9mtgtWa2c1sk/Vhxaaa78guiw/refs/heads/main/popup.lua"))()
 	end)
 end)
 
