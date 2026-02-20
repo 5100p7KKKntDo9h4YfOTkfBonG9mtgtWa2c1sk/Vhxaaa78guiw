@@ -253,11 +253,7 @@ local function AnimateTitleShimmer(titleBar)
 	task.spawn(sweepLoop)
 end
 
-return {
-	Themes           = Themes,
-	AnimateAccentPulse  = AnimateAccentPulse,
-	AnimateTitleShimmer = AnimateTitleShimmer,
-}
+
 
 local Library = {
 	Version = "1.5.0",
