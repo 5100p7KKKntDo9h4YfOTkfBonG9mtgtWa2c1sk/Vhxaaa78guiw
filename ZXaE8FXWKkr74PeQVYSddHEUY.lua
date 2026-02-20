@@ -31,12 +31,12 @@ local ProtectGui = protectgui or (syn and syn.protect_gui) or function(f) end
 
 local Themes = {
 	Names = {
-		"LunaHubPurple"
+		"VolcanoHubXViolet",
+		"VolcanoHubX"
 	},
-	LunaHubPurple = {
-		Name = "LunaHubPurple",
+	VolcanoHubX = {
+		Name = "VolcanoHubXViolet",
 		Accent = Color3.fromRGB(148, 0, 211),  
-
 		AcrylicMain = Color3.fromRGB(20, 20, 30),
 		AcrylicBorder = Color3.fromRGB(40, 40, 60), 
 		AcrylicGradient = ColorSequence.new(Color3.fromRGB(30, 30, 45), Color3.fromRGB(15, 15, 25)),
@@ -78,7 +78,185 @@ local Themes = {
 		SubText = Color3.fromRGB(170, 170, 190),
 		Hover = Color3.fromRGB(148, 0, 211),  
 		HoverChange = 0.08,
-	}    
+	},
+
+	-- ╔══════════════════════════════════════╗
+	-- ║        VOLCANOHUB RED THEME          ║
+	-- ║   Deep Crimson • Lava • Dark Ash     ║
+	-- ╚══════════════════════════════════════╝
+	VolcanoHubRed = {
+		Name = "VolcanoHubX",
+
+		-- Core accent: vivid crimson/lava red
+		Accent = Color3.fromRGB(220, 30, 30),
+
+		-- Background: near-black with warm dark ash undertone
+		AcrylicMain = Color3.fromRGB(18, 10, 10),
+		AcrylicBorder = Color3.fromRGB(60, 20, 20),
+
+		-- Gradient: dark ash → very deep red-black (lava glow effect)
+		AcrylicGradient = ColorSequence.new(
+			{
+				ColorSequenceKeypoint.new(0,   Color3.fromRGB(35, 10, 10)),  -- top: dark ember
+				ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 8,  8)),   -- mid: deep ash
+				ColorSequenceKeypoint.new(1,   Color3.fromRGB(12, 4,  4))    -- bottom: near black
+			}
+		),
+		AcrylicNoise = 0.65,  -- slightly lower noise for a cleaner look
+
+		-- Title bar: crimson glow line
+		TitleBarLine = Color3.fromRGB(180, 30, 30),
+		Tab = Color3.fromRGB(220, 30, 30),
+
+		-- Elements: dark ash panels with red accent
+		Element = Color3.fromRGB(200, 25, 25),
+		ElementBorder = Color3.fromRGB(55, 15, 15),
+		InElementBorder = Color3.fromRGB(100, 25, 25),
+		ElementTransparency = 0.72,
+
+		-- Toggle: crimson slider, white knob
+		ToggleSlider = Color3.fromRGB(220, 30, 30),
+		ToggleToggled = Color3.fromRGB(255, 230, 230),
+
+		-- Slider rail: muted warm red-gray
+		SliderRail = Color3.fromRGB(180, 90, 90),
+
+		-- Dropdown: dark ash panels with red borders
+		DropdownFrame = Color3.fromRGB(28, 10, 10),
+		DropdownHolder = Color3.fromRGB(45, 15, 15),
+		DropdownBorder = Color3.fromRGB(220, 30, 30),
+		DropdownOption = Color3.fromRGB(220, 30, 30),
+		Keybind = Color3.fromRGB(220, 30, 30),
+
+		-- Input fields
+		Input = Color3.fromRGB(220, 180, 180),
+		InputFocused = Color3.fromRGB(20, 5, 5),
+		InputIndicator = Color3.fromRGB(220, 50, 50),
+
+		-- Dialog: deep ash with crimson accents
+		Dialog = Color3.fromRGB(25, 8, 8),
+		DialogHolder = Color3.fromRGB(40, 14, 14),
+		DialogHolderLine = Color3.fromRGB(220, 30, 30),
+		DialogButton = Color3.fromRGB(28, 10, 10),
+		DialogButtonBorder = Color3.fromRGB(220, 30, 30),
+		DialogBorder = Color3.fromRGB(80, 25, 25),
+		DialogInput = Color3.fromRGB(35, 12, 12),
+		DialogInputLine = Color3.fromRGB(220, 30, 30),
+
+		-- Text: warm off-white with slight red tint
+		Text = Color3.fromRGB(255, 235, 235),
+		SubText = Color3.fromRGB(190, 140, 140),
+		Hover = Color3.fromRGB(220, 30, 30),
+		HoverChange = 0.10,  -- slightly stronger hover pop
+	}
+}
+
+-- ════════════════════════════════════════════════════
+--  ANIMATION HELPER — pulse glow on Accent elements
+--  Call this after your UI window is created.
+--  Usage: AnimateAccentPulse(window, Themes.VolcanoHubRed)
+-- ════════════════════════════════════════════════════
+local function AnimateAccentPulse(guiRoot, theme)
+	local TweenService = game:GetService("TweenService")
+	local RunService   = game:GetService("RunService")
+
+	-- Pulse between vivid red and deeper crimson
+	local colorA = Color3.fromRGB(220, 30,  30)   -- bright lava
+	local colorB = Color3.fromRGB(140, 10,  10)   -- deep ember
+	local PULSE_TIME = 1.8  -- seconds per half-cycle
+
+	local function pulseObject(obj, prop)
+		local tweenIn = TweenService:Create(obj,
+			TweenInfo.new(PULSE_TIME, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true),
+			{ [prop] = colorB }
+		)
+		tweenIn:Play()
+	end
+
+	-- Find all accent-colored elements and animate them
+	local function scanAndAnimate(parent)
+		for _, child in ipairs(parent:GetDescendants()) do
+			-- UIStroke (borders)
+			if child:IsA("UIStroke") then
+				if child.Color == theme.Accent
+				or child.Color == theme.ElementBorder
+				or child.Color == theme.DropdownBorder then
+					child.Color = colorA
+					pulseObject(child, "Color")
+				end
+			end
+			-- Frames / ImageLabels used as accent backgrounds
+			if child:IsA("Frame") or child:IsA("ImageLabel") then
+				if child.BackgroundColor3 == theme.Accent
+				or child.BackgroundColor3 == theme.Element then
+					child.BackgroundColor3 = colorA
+					pulseObject(child, "BackgroundColor3")
+				end
+			end
+			-- TextLabels with accent color
+			if child:IsA("TextLabel") or child:IsA("TextButton") then
+				if child.TextColor3 == theme.Accent then
+					child.TextColor3 = colorA
+					pulseObject(child, "TextColor3")
+				end
+			end
+		end
+	end
+
+	-- Run on load + watch for new children (toggles, dropdowns spawned later)
+	scanAndAnimate(guiRoot)
+	guiRoot.DescendantAdded:Connect(function(desc)
+		task.defer(function()
+			scanAndAnimate(desc)
+		end)
+	end)
+end
+
+-- ════════════════════════════════════════════════════
+--  TITLE BAR SHIMMER — slow moving highlight sweep
+--  Call: AnimateTitleShimmer(titleBarFrame)
+-- ════════════════════════════════════════════════════
+local function AnimateTitleShimmer(titleBar)
+	local TweenService = game:GetService("TweenService")
+
+	local shimmer = Instance.new("Frame")
+	shimmer.Name = "Shimmer"
+	shimmer.Size = UDim2.new(0.3, 0, 1, 0)
+	shimmer.Position = UDim2.new(-0.35, 0, 0, 0)
+	shimmer.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+	shimmer.BackgroundTransparency = 0.85
+	shimmer.BorderSizePixel = 0
+	shimmer.ZIndex = titleBar.ZIndex + 1
+	shimmer.Parent = titleBar
+
+	local uiGrad = Instance.new("UIGradient")
+	uiGrad.Transparency = NumberSequence.new({
+		NumberSequenceKeypoint.new(0,   1),
+		NumberSequenceKeypoint.new(0.5, 0.7),
+		NumberSequenceKeypoint.new(1,   1),
+	})
+	uiGrad.Rotation = 90
+	uiGrad.Parent = shimmer
+
+	local function sweepLoop()
+		while true do
+			shimmer.Position = UDim2.new(-0.35, 0, 0, 0)
+			local tween = TweenService:Create(shimmer,
+				TweenInfo.new(2.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut),
+				{ Position = UDim2.new(1.05, 0, 0, 0) }
+			)
+			tween:Play()
+			tween.Completed:Wait()
+			task.wait(3.5)  -- pause between sweeps
+		end
+	end
+	task.spawn(sweepLoop)
+end
+
+return {
+	Themes           = Themes,
+	AnimateAccentPulse  = AnimateAccentPulse,
+	AnimateTitleShimmer = AnimateTitleShimmer,
 }
 
 local Library = {
